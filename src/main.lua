@@ -72,6 +72,12 @@ local angle_z = 0
 
 --group:拡大率,false
 
+---$track:拡大率
+---min=0
+---max=10000
+---step=0.001
+local zoom = 100
+
 ---$track:X拡大率
 ---min=-10000
 ---max=10000
@@ -90,6 +96,7 @@ local scale_y = 100
 ---step=0.001
 local scale_z = 100
 
+zoom = zoom / 100
 scale_x = scale_x / 100
 scale_y = scale_y / 100
 scale_z = scale_z / 100
@@ -159,6 +166,9 @@ if type(PI.angle_y) == "number" then
 end
 if type(PI.angle_z) == "number" then
     angle_z = PI.angle_z
+end
+if type(PI.zoom) == "number" then
+    zoom = PI.zoom
 end
 if type(PI.scale_x) == "number" then
     scale_x = PI.scale_x
@@ -272,6 +282,7 @@ if is_target_char then
     obj.cx = obj.cx + center_x
     obj.cy = obj.cy + center_y
     obj.cz = obj.cz + center_z
+    obj.zoom = obj.zoom * zoom
     obj.sx = obj.sx * scale_x
     obj.sy = obj.sy * scale_y
     obj.sz = obj.sz * scale_z
