@@ -1,5 +1,5 @@
 --label:配置
---information:https://github.com/sevenc-nanashi/aviutl2-scripts/blob/main/scripts/%E3%83%89%E3%83%83%E3%83%88%E7%B5%B5%E5%A4%89%E5%BD%A2.anm2
+--information:https://github.com/sevenc-nanashi/transform_specific_chars.anm2
 
 ---$string:対象文字
 local target_chars = ""
