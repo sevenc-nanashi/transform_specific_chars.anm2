@@ -757,7 +757,7 @@ dependencies = [
 
 [[package]]
 name = "transform_specific_chars"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "aviutl2",
  "cached",
