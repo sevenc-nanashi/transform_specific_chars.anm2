@@ -137,9 +137,6 @@ end
 if type(PI.regex) == "boolean" then
     regex = PI.regex
 end
-if type(PI.invert) == "boolean" then
-    invert_target = PI.invert
-end
 if type(PI.dx) == "number" then
     dx = PI.dx
 end

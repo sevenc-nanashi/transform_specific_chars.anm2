@@ -33,6 +33,28 @@ When `Regex` is on, `Target Chars` is evaluated as a Rust [regex](https://docs.r
 
 - Text containing the clear notation `<c...>` and script notation (`<?...?>`) will cause an error.
 
+## PI
+
+Like [@sigma-axis](https://github.com/sigma-axis)'s scripts, this script supports PI (Parameter Injection).\
+You can set parameters using Lua expressions.\
+Values set by PI take precedence over trackbar values.
+
+In most cases, you do not need PI, but it allows more flexible configuration when needed.
+
+### Available Keys
+
+- `target_chars` (`string`): Target Chars
+- `invert_target` (`boolean`): Invert Target Characters
+- `regex` (`boolean`): Use Regex
+- `dx`, `dy`, `dz` (`number`): Position offset
+- `center_x`, `center_y`, `center_z` (`number`): Center
+- `angle_x`, `angle_y`, `angle_z` (`number`): Rotation
+- `zoom`, `scale_x`, `scale_y`, `scale_z` (`number`): Scale (`1.0` is default size)
+- `transparency` (`number`): Transparency (`0.0` is opaque, `1.0` is fully transparent)
+- `color` (`number | false`): Text Color
+- `terminate` (`boolean`): Terminate Effect
+- `debug` (`boolean`): Debug Mode
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
