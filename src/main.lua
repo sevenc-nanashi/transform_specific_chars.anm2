@@ -72,7 +72,7 @@ local angle_z = 0
 
 --group:拡大率,false
 
----$track:拡大率
+---$track:XYZ拡大率
 ---min=0
 ---max=10000
 ---step=0.001

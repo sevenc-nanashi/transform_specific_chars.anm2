@@ -19,7 +19,7 @@ pub fn parse_text(text: &str) -> aviutl2::AnyResult<String> {
                     i += 2;
                 }
                 Some('n') => {
-                    // 改行はオブジェクトを生成しない
+                    out.push("\n".to_string());
                     i += 2;
                 }
                 _ => {
@@ -27,10 +27,6 @@ pub fn parse_text(text: &str) -> aviutl2::AnyResult<String> {
                     i += 1;
                 }
             },
-            '\t' => {
-                // タブ文字はオブジェクトを生成しない
-                i += 1;
-            }
             '<' => {
                 let consumed = parse_control_sequence(&chars, i)?;
                 if consumed == 0 {
@@ -48,6 +44,23 @@ pub fn parse_text(text: &str) -> aviutl2::AnyResult<String> {
     }
 
     Ok(out.join(""))
+}
+
+pub fn object_index_to_string_index(text: &str, index: usize) -> Option<usize> {
+    // NOTE: 改行とタブはオブジェクトとして描画されないので、それを考慮して文字インデックスを計算する必要がある
+    let chars: Vec<char> = text.chars().collect();
+    let mut remaining = index;
+    for (i, &c) in chars.iter().enumerate() {
+        if c.is_ascii() && (c == '\n' || c == '\t') {
+            // 改行とタブはオブジェクトとして描画されないので、文字インデックスを減らさない
+        } else {
+            if remaining == 0 {
+                return Some(i);
+            }
+            remaining -= 1;
+        }
+    }
+    None
 }
 
 fn parse_control_sequence(chars: &[char], i: usize) -> aviutl2::AnyResult<usize> {
@@ -108,4 +121,26 @@ fn consume_p_tag(input: &str) -> usize {
     lazy_regex::regex_find!(r"^<p[+-]?[0-9.]+,[+-]?[0-9.]+>", input)
         .map(|matched| matched.chars().count())
         .unwrap_or(0)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_text() {
+        let input = r"Hello\nWorld<#FF0000><s1,2,BI><r0.5><w*1.5><p10,-5>Red";
+        let expected = "Hello\nWorldRed";
+        let result = parse_text(input).unwrap();
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_object_index_to_string_index() {
+        let text = "A\nB\tC";
+        assert_eq!(object_index_to_string_index(text, 0), Some(0)); // 'A'
+        assert_eq!(object_index_to_string_index(text, 1), Some(2)); // 'B'
+        assert_eq!(object_index_to_string_index(text, 2), Some(4)); // 'C'
+        assert_eq!(object_index_to_string_index(text, 3), None); // Out of bounds
+    }
 }
