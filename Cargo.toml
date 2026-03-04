@@ -1,0 +1,14 @@
+[package]
+name = "transform_specific_chars"
+version = "0.0.0"
+edition = "2024"
+
+[lib]
+name = "transform_specific_chars"
+crate-type = ["cdylib"]
+
+[dependencies]
+aviutl2 = "0.20.2"
+cached = "0.56.0"
+lazy-regex = "3.4.1"
+regex = "1.12.3"

@@ -1,0 +1,7 @@
+build:
+  out_dir: target
+
+scripts:
+  - name: transform_specific_chars.anm2
+    sources:
+      - path: src/main.lua

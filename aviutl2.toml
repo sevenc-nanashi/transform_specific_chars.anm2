@@ -1,0 +1,54 @@
+#:schema ./.aviutl2-cli/aviutl2.schema.json
+# 設定ファイルについては https://github.com/sevenc-nanashi/aviutl2-cli を参照してください。
+
+[project]
+id = "sevenc-nanashi.transform_specific_chars-anm2"
+name = "transform_specific_chars.anm2"
+version = "0.1.0"
+
+[development]
+aviutl2_version = "latest"
+
+[artifacts.English-transform_specific_chars-anm2]
+destination = "Language/English.transform_specific_chars.aul2"
+source = "./i18n/English.transform_specific_chars.aul2"
+
+[artifacts.English-aul2]
+enabled = false
+destination = "Language/English.aul2"
+source = "https://raw.githubusercontent.com/aviutl2/aviutl2_community_translation/refs/heads/main/locales/community_en.aul2"
+
+[artifacts.English-aul2.profiles.debug]
+enabled = true
+
+[artifacts.transform_specific_chars-anm2]
+build = "aulua build"
+source = "./target/transform_specific_chars.anm2"
+destination = "Script/transform_specific_chars.anm2"
+
+[artifacts.transform_specific_chars-mod2]
+destination = "Script/transform_specific_chars.mod2"
+
+[artifacts.transform_specific_chars-mod2.profiles.debug]
+build = "cargo build"
+source = "target/debug/transform_specific_chars.dll"
+
+[artifacts.transform_specific_chars-mod2.profiles.release]
+build = "cargo build --release"
+source = "target/release/transform_specific_chars.dll"
+
+[catalog]
+id = "sevenc-nanashi.transform_specific_chars-anm2"
+name = "transform_specific_chars.anm2"
+summary = "指定した文字のみに加工を行うスクリプト"
+type = "common"
+description = { type = "url", url = "https://raw.githubusercontent.com/sevenc-nanashi/transform_specific_chars.anm2/main/README.md" }
+author = "Nanashi."
+download_source = { type = "github", owner = "sevenc-nanashi", repo = "transform_specific_chars.anm2" }
+homepage = "https://github.com/sevenc-nanashi/transform_specific_chars.anm2"
+license = { type = "MIT", template = false, text = { type = "file", path = "./LICENSE" } }
+
+[release]
+prebuild = ["cargo about generate ./about.hbs -o ./release/package.txt"]
+package_template = "./release/package.txt"
+package_information = "{name} v{version} / 指定した文字のみに加工を行うスクリプト"
