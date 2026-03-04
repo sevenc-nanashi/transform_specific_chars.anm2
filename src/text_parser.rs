@@ -19,7 +19,7 @@ pub fn parse_text(text: &str) -> aviutl2::AnyResult<String> {
                     i += 2;
                 }
                 Some('n') => {
-                    out.push("\n".to_string());
+                    // 改行はオブジェクトを生成しない
                     i += 2;
                 }
                 _ => {
@@ -28,6 +28,7 @@ pub fn parse_text(text: &str) -> aviutl2::AnyResult<String> {
                 }
             },
             '\t' => {
+                // タブ文字はオブジェクトを生成しない
                 i += 1;
             }
             '<' => {

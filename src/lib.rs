@@ -1,4 +1,4 @@
-use aviutl2::module::ScriptModuleFunctions;
+use aviutl2::{anyhow, module::ScriptModuleFunctions, tracing};
 
 mod target_parser;
 mod text_parser;
@@ -58,7 +58,6 @@ fn matched_ranges(text: String, regex: String) -> aviutl2::AnyResult<Vec<(usize,
         .map(|(i, (byte_index, _))| (byte_index, i))
         .collect::<std::collections::BTreeMap<usize, usize>>();
     char_indices.insert(chars.len(), chars.chars().count()); // テキストの終端もマップに追加
-                                                             //
     Ok(target_regex
         .find_iter(&chars)
         .map(|m| (char_indices[&m.start()], char_indices[&m.end()]))
@@ -67,6 +66,20 @@ fn matched_ranges(text: String, regex: String) -> aviutl2::AnyResult<Vec<(usize,
 
 #[aviutl2::module::functions]
 impl TransformSpecificCharsMod2 {
+    fn verify_char_parse(&self, text: String, expected_num: usize) -> aviutl2::AnyResult<()> {
+        let chars = crate::text_parser::parse_text(&text)?;
+        let actual_num = chars.chars().count();
+        tracing::debug!("Parsed text '{text}' into {chars:?}");
+        if actual_num != expected_num {
+            anyhow::bail!(
+                "Parsed character count {} does not match expected count {}",
+                actual_num,
+                expected_num
+            );
+        }
+        tracing::debug!("Character parsing verification passed for text '{text}'");
+        Ok(())
+    }
     fn is_target_char(
         &self,
         index: usize,
