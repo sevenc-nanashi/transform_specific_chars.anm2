@@ -51,7 +51,7 @@ pub fn object_index_to_string_index(text: &str, index: usize) -> Option<usize> {
     let chars: Vec<char> = text.chars().collect();
     let mut remaining = index;
     for (i, &c) in chars.iter().enumerate() {
-        if c.is_ascii() && (c == '\n' || c == '\t') {
+        if c == '\n' || c == '\t' {
             // 改行とタブはオブジェクトとして描画されないので、文字インデックスを減らさない
         } else {
             if remaining == 0 {

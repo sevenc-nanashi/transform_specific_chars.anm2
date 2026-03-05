@@ -39,7 +39,7 @@ fn is_target_char_simple(
         return Ok(false);
     }
     let chars = crate::text_parser::parse_text(&text)?;
-    let char_index = object_index_to_string_index(&text, object_index).ok_or_else(|| {
+    let char_index = object_index_to_string_index(&chars, object_index).ok_or_else(|| {
         anyhow::anyhow!(
             "Object index {} is out of bounds for text '{}'",
             object_index,
