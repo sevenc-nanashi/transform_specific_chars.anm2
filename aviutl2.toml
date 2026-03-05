@@ -24,7 +24,7 @@ enabled = true
 [artifacts.transform_specific_chars-anm2]
 build = "aulua build"
 source = "./target/transform_specific_chars.anm2"
-destination = "Script/transform_specific_chars.anm2"
+destination = "Script/transform_specific_chars.anm2.anm2"
 
 [artifacts.transform_specific_chars-mod2]
 destination = "Script/transform_specific_chars.mod2"
